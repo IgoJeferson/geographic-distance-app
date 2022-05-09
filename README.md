@@ -10,12 +10,15 @@ To calculate the distance between the two points, the algorithm used is Haversin
 - Docker
 - Docker-compose
 - Lombok Plugin
+- Git Large File Storage [git-lfs](https://git-lfs.github.com/)
 
 ## Used technologies
 
 - Java
 - Flyway
-- MySQL 
+- MySQL
+- Lombok
+- SpringBoot + Web + Actuator 
 
 ## Installation
 
@@ -39,29 +42,96 @@ Source of the db scripts: https://www.freemaptools.com/download-uk-postcode-lat-
 
 ## Running the Unit Tests
 
+```./mvnw test ```
+
 
 ## Run to test the API
 
----- Examples
+* To list postcodes
 
+```curl --location --request GET 'localhost:8080/rest/postcodes?pageNumber=1&pageSize=25'```
 
-### Run app
-./mvnw spring-boot:run
+```json
+{
+  "content": [
+    {
+      "id": 6,
+      "postcode": "AB11 8RQ",
+      "latitude": "57.135968",
+      "longitude": "-2.072115"
+    },
+    {
+      "id": 7,
+      "postcode": "AB12 3FJ",
+      "latitude": "57.097987",
+      "longitude": "-2.077447"
+    },
+    {
+      "id": 8,
+      "postcode": "AB12 4NA",
+      "latitude": "57.064273",
+      "longitude": "-2.130018"
+    },
+    {
+      "id": 9,
+      "postcode": "AB12 5GL",
+      "latitude": "57.081938",
+      "longitude": "-2.246567"
+    },
+    {
+      "id": 10,
+      "postcode": "AB12 9SP",
+      "latitude": "57.148707",
+      "longitude": "-2.097806"
+    }
+  ],
+  "pageNumber": 1,
+  "pageSize": 5,
+  "totalElements": 1785253,
+  "totalPages": 357051,
+  "last": false
+}
+```
 
+* To Calculate the distance between two postcodes
+
+```curl --location --request GET 'localhost:8080/rest/geographic-distance?origin=AB24 2TF&destination=AB21 7XB'```
+
+```json
+{
+    "origin": {
+        "id": 1056,
+        "postcode": "AB24 2TF",
+        "latitude": "57° 10' 9\" N",
+        "longitude": "2° 6' 32\" W"
+    },
+    "destination": {
+        "id": 67,
+        "postcode": "AB21 7XB",
+        "latitude": "57° 14' 15\" N",
+        "longitude": "2° 9' 42\" W"
+    },
+    "distance": 8.22212107863058,
+    "unit": "km"
+}
+```
 
 
 ### Stop
-docker-compose down
 
-docker-compose down --rmi all
+```docker-compose down```
+
+```docker-compose down --rmi all```
 
 
-* Features
+## Note about the load of the database UK Post codes
 
-- Unit tests!
-- Updating postal codes
-- Request logging (log the two post codes in the request;
-  preferably in some way so we can later aggregate and report easily);
-- Authentication - restrict the service to those who know a username/password combination
+Considering the size of the script is 193MB, it was not possible to commit on Github, if you want to do full test, 
+you should download the script from https://www.freemaptools.com/download-uk-postcode-lat-lng.htm 
+and moved to the directory ```src/main/resources/db/migration``` with name like:  V1.1__insert_ukpostcodes.sql
+
 
 ## Improvements
+- Unit tests!
+  - Increase the coverage doing more unit tests in the service and in the controller layer
+- Authentication - restrict the service to those who know a username/password combination

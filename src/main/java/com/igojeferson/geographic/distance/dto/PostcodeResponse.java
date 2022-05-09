@@ -12,7 +12,7 @@ import java.util.List;
 public class PostcodeResponse {
 
     private List<PostcodeDto> content;
-    private int pageNo;
+    private int pageNumber;
     private int pageSize;
     private long totalElements;
     private int totalPages;

@@ -22,15 +22,15 @@ public final class LatLngConverter {
 	 * @return dms representation for given coordinates
 	 */
 	public static LatLng processCoordinates(String latitude, String longitude) {
-		String converted0 = LatLngConverter.decimalToDMS(Float.valueOf(longitude));
+		String convertedLat = LatLngConverter.decimalToDMS(Float.valueOf(latitude));
 		final String dmsLat = Float.valueOf(latitude) > 0 ? ORIENTATIONS[0] : ORIENTATIONS[1];
-		converted0 = converted0.concat(" ").concat(dmsLat);
+		convertedLat = convertedLat.concat(" ").concat(dmsLat);
 
-		String converted1 = LatLngConverter.decimalToDMS(Float.valueOf(latitude));
+		String convertedLng = LatLngConverter.decimalToDMS(Float.valueOf(longitude));
 		final String dmsLng = Float.valueOf(longitude) > 0 ? ORIENTATIONS[2] : ORIENTATIONS[3];
-		converted1 = converted1.concat(" ").concat(dmsLng);
+		convertedLng = convertedLng.concat(" ").concat(dmsLng);
 
-		return new LatLng(converted1, converted0);
+		return new LatLng(convertedLat, convertedLng);
 	}
 
 	/**
@@ -38,8 +38,7 @@ public final class LatLngConverter {
 	 * be necessary to know whether it is a latitudinal or longitudinal
 	 * coordinate in order to fully convert it.
 	 * 
-	 * @param coord
-	 *            coordinate in decimal format
+	 * @param coord coordinate in decimal format
 	 * @return coordinate in D°M′S″ format
 	 * @see <a href='https://goo.gl/pWVp60'>Geographic coordinate conversion
 	 *      (wikipedia)</a>
@@ -65,7 +64,7 @@ public final class LatLngConverter {
 			intPart *= -1;
 
 		String seconds = String.valueOf(intPart);
-		String output = Math.abs(Integer.parseInt(degrees)) + "°" + minutes + "'" + seconds + "\"";
+		String output = Math.abs(Integer.parseInt(degrees)) + "° " + minutes + "' " + seconds + "\"";
 
 		return output;
 	}

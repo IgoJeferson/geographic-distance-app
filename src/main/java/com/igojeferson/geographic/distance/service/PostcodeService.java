@@ -48,7 +48,7 @@ public class PostcodeService {
 
         PostcodeResponse postcodeResponse = new PostcodeResponse();
         postcodeResponse.setContent(content);
-        postcodeResponse.setPageNo(entities.getNumber());
+        postcodeResponse.setPageNumber(entities.getNumber());
         postcodeResponse.setPageSize(entities.getSize());
         postcodeResponse.setTotalElements(entities.getTotalElements());
         postcodeResponse.setTotalPages(entities.getTotalPages());
